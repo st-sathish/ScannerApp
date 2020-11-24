@@ -23,16 +23,19 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.camera.core.ImageCapture;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.daypaytechnologies.documentscanner.LandingPageActivity;
 import com.daypaytechnologies.documentscanner.R;
 import com.daypaytechnologies.documentscanner.camera.CameraController;
 import com.daypaytechnologies.documentscanner.camera.CameraType;
+import com.daypaytechnologies.documentscanner.helpers.DocumentStorageHelper;
 
 import java.io.File;
 
-public class CameraFragment extends BaseFragment {
+public class CameraFragment extends BaseFragment implements View.OnClickListener, ImageCapture.OnImageSavedListener {
 
     private int REQUEST_CODE_PERMISSIONS = 101;
     private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE"};
@@ -40,6 +43,7 @@ public class CameraFragment extends BaseFragment {
     ImageButton captureBtn;
     CameraController cameraController;
     FrameLayout cameraLayout;
+    DocumentStorageHelper documentStorageHelper;
 
     public static CameraFragment newInstance(String aTitle) {
         CameraFragment cameraFragment = new CameraFragment();
@@ -53,6 +57,7 @@ public class CameraFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         cameraController = new CameraController(getActivity(), textureView);
+        documentStorageHelper = new DocumentStorageHelper(getActivity());
     }
 
     @Nullable
@@ -62,35 +67,43 @@ public class CameraFragment extends BaseFragment {
         textureView = view.findViewById(R.id.view_finder);
         cameraLayout = view.findViewById(R.id.camera_layout);
         captureBtn = view.findViewById(R.id.imgCapture);
-        captureBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseDocumentType();
-//                File file = new File(Environment.getExternalStorageDirectory() + "/" + System.currentTimeMillis() + ".png");
-//                cameraController.getImageCaptureInstance().takePicture(file, new ImageCapture.OnImageSavedListener() {
-//                    @Override
-//                    public void onImageSaved(@NonNull File file) {
-//                        String msg = "Pic captured at " + file.getAbsolutePath();
-//                        Toast.makeText(getActivity(), msg,Toast.LENGTH_LONG).show();
-//                    }
-//
-//                    @Override
-//                    public void onError(@NonNull ImageCapture.UseCaseError useCaseError, @NonNull String message, @Nullable Throwable cause) {
-//                        String msg = "Pic capture failed : " + message;
-//                        Toast.makeText(getActivity(), msg,Toast.LENGTH_LONG).show();
-//                        if(cause != null){
-//                            cause.printStackTrace();
-//                        }
-//                    }
-//                });
-            }
-        });
+        captureBtn.setOnClickListener(this);
         if(allPermissionsGranted()){
             chooseDocumentType();
         } else{
             ActivityCompat.requestPermissions(getActivity(), REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
         }
         return view;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()) {
+            case R.id.imgCapture:
+                showLoading();
+                File file = documentStorageHelper.createNewFile();
+                cameraController.getImageCaptureInstance().takePicture(file, this);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onImageSaved(@NonNull File file) {
+        hideLoading();
+        String msg = "Pic captured at " + file.getAbsolutePath();
+        Toast.makeText(getActivity(), msg,Toast.LENGTH_LONG).show();
+        switchFragment(LandingPageActivity.DOCUMENT_FRAGMENT, "Scanned Files", true);
+    }
+
+    @Override
+    public void onError(@NonNull ImageCapture.UseCaseError useCaseError, @NonNull String message, @Nullable Throwable cause) {
+        String msg = "Pic capture failed : " + message;
+        Toast.makeText(getActivity(), msg,Toast.LENGTH_LONG).show();
+        if(cause != null){
+            cause.printStackTrace();
+        }
     }
 
     @Override

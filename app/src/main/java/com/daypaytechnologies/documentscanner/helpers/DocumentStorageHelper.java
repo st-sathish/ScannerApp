@@ -28,14 +28,14 @@ public class DocumentStorageHelper {
             boolean isCreated = rootDir.mkdir();
             if(!isCreated) {
                 Toast.makeText(mActivity, "Couldn't create root directory", Toast.LENGTH_LONG).show();
-                return new File(Environment.getExternalStorageDirectory() + "/" + System.currentTimeMillis() + ".png");
+                return new File(Environment.getExternalStorageDirectory() + File.pathSeparator + System.currentTimeMillis() + ".png");
             }
         }
-        return new File(rootDir + "/" + System.currentTimeMillis() + ".png");
+        return new File(rootDir + File.pathSeparator + System.currentTimeMillis() + ".png");
     }
 
     public File getRootDirectoryPath() {
-        return new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + ROOT_DIRECTORY);
+        return new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.pathSeparator + ROOT_DIRECTORY);
     }
 
     public List<FileVO> findAllDocuments() {

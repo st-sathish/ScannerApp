@@ -1,15 +1,14 @@
 package com.daypaytechnologies.documentscanner;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.daypaytechnologies.documentscanner.fragments.CameraFragment;
 import com.daypaytechnologies.documentscanner.fragments.DocumentsListFragment;
 import com.daypaytechnologies.documentscanner.fragments.HomeFragment;
+import com.daypaytechnologies.documentscanner.fragments.TakePictureFragment;
 
 public class LandingPageActivity extends BaseAppCompatActivity {
 
@@ -19,12 +18,12 @@ public class LandingPageActivity extends BaseAppCompatActivity {
 
     public static final int DOCUMENT_FRAGMENT = 3;
 
+    public static final int TAKE_PICTURE_FRAGMENT = 4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_landing_page);
-//        BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
-//        bottomNavigationView.setOnNavigationItemSelectedListener(this);
         displayView(HOME_FRAGMENT, "Home", true);
     }
 
@@ -40,6 +39,9 @@ public class LandingPageActivity extends BaseAppCompatActivity {
             case DOCUMENT_FRAGMENT:
                 fragment = DocumentsListFragment.newInstance("Scanned Document");
                 break;
+            case TAKE_PICTURE_FRAGMENT:
+                fragment = TakePictureFragment.newInstance("Take Picture");
+                break;
             default:
                 break;
         }
@@ -54,22 +56,4 @@ public class LandingPageActivity extends BaseAppCompatActivity {
             ft.addToBackStack(backStateName);
         ft.commit();
     }
-
-//    @Override
-//    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-//        switch (menuItem.getItemId()){
-//            case R.id.home:
-//                displayView(HOME_FRAGMENT, "Home", true);
-//                break;
-//            case R.id.camera:
-//                displayView(CAMERA_FRAGMENT, "Camera", true);
-//                break;
-//            case R.id.media:
-//                //displayView(GALLERY_FRAGMENT, "Gallery", true);
-//                break;
-//            case R.id.merge:
-//                break;
-//        }
-//        return true;
-//    }
 }

@@ -10,7 +10,9 @@ import androidx.annotation.Nullable;
 
 import com.daypaytechnologies.documentscanner.R;
 
-public class HomeFragment extends BaseFragment {
+import static com.daypaytechnologies.documentscanner.LandingPageActivity.CAMERA_FRAGMENT;
+
+public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
     public static HomeFragment newInstance(String aTitle) {
         HomeFragment cameraFragment = new HomeFragment();
@@ -29,6 +31,14 @@ public class HomeFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fr_home, container, false);
+        view.findViewById(R.id.ic_camera).setOnClickListener(this);
         return view;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.ic_camera) {
+            switchFragment(CAMERA_FRAGMENT, "Camera", true);
+        }
     }
 }

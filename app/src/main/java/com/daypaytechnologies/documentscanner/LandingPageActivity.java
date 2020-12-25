@@ -10,10 +10,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.daypaytechnologies.documentscanner.fragments.CameraFragment;
 import com.daypaytechnologies.documentscanner.fragments.DocumentsListFragment;
 import com.daypaytechnologies.documentscanner.fragments.HomeFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 
-public class LandingPageActivity extends BaseAppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class LandingPageActivity extends BaseAppCompatActivity {
 
     public static final int HOME_FRAGMENT = 1;
 
@@ -25,8 +23,8 @@ public class LandingPageActivity extends BaseAppCompatActivity implements Bottom
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_landing_page);
-        BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
-        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+//        BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
+//        bottomNavigationView.setOnNavigationItemSelectedListener(this);
         displayView(HOME_FRAGMENT, "Home", true);
     }
 
@@ -57,21 +55,21 @@ public class LandingPageActivity extends BaseAppCompatActivity implements Bottom
         ft.commit();
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()){
-            case R.id.home:
-                displayView(HOME_FRAGMENT, "Home", true);
-                break;
-            case R.id.camera:
-                displayView(CAMERA_FRAGMENT, "Camera", true);
-                break;
-            case R.id.media:
-                //displayView(GALLERY_FRAGMENT, "Gallery", true);
-                break;
-            case R.id.merge:
-                break;
-        }
-        return true;
-    }
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//        switch (menuItem.getItemId()){
+//            case R.id.home:
+//                displayView(HOME_FRAGMENT, "Home", true);
+//                break;
+//            case R.id.camera:
+//                displayView(CAMERA_FRAGMENT, "Camera", true);
+//                break;
+//            case R.id.media:
+//                //displayView(GALLERY_FRAGMENT, "Gallery", true);
+//                break;
+//            case R.id.merge:
+//                break;
+//        }
+//        return true;
+//    }
 }

@@ -26,4 +26,9 @@ public class DocumentScannerFragment extends AbstractScannerFragment {
         View view = inflater.inflate(R.layout.fr_document_scanner, container, false);
         return view;
     }
+
+    @Override
+    public void onPermissionGranted() {
+
+    }
 }

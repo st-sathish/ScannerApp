@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import com.daypaytechnologies.documentscanner.R;
 
 import static com.daypaytechnologies.documentscanner.LandingPageActivity.CAMERA_FRAGMENT;
+import static com.daypaytechnologies.documentscanner.LandingPageActivity.TAKE_PICTURE_FRAGMENT;
 
 public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
@@ -38,7 +39,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.ic_camera) {
-            switchFragment(CAMERA_FRAGMENT, "Camera", true);
+            switchFragment(TAKE_PICTURE_FRAGMENT, "Camera", true);
         }
     }
 }

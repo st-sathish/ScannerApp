@@ -1,6 +1,7 @@
 package com.daypaytechnologies.documentscanner.fragments;
 
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -56,6 +57,14 @@ public abstract class AbstractScannerFragment extends BaseFragment {
             }
         }
         return true;
+    }
+
+    public static int getScreenWidth() {
+        return Resources.getSystem().getDisplayMetrics().widthPixels;
+    }
+
+    public static int getScreenHeight() {
+        return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
     public abstract void onPermissionGranted();

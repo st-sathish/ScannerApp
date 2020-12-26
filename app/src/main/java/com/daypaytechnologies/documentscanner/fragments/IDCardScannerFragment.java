@@ -21,7 +21,7 @@ public class IDCardScannerFragment extends AbstractScannerFragment {
 
     TextureView textureView;
     CameraController cameraController;
-    LinearLayout cameraLayout;
+    FrameLayout cameraLayout;
 
     public static IDCardScannerFragment newInstance(String aTitle) {
         IDCardScannerFragment cameraFragment = new IDCardScannerFragment();
@@ -35,7 +35,7 @@ public class IDCardScannerFragment extends AbstractScannerFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fr_id_card_scanner, container, false);
-        textureView = view.findViewById(R.id.view_finder);
+        textureView = view.findViewById(R.id.texture_view);
         cameraController = new CameraController(getActivity(), textureView);
         cameraLayout = view.findViewById(R.id.camera_layout);
         return view;
@@ -49,7 +49,7 @@ public class IDCardScannerFragment extends AbstractScannerFragment {
     @Override
     public void onPermissionGranted() {
         Toast.makeText(getActivity(), "Permission granted", Toast.LENGTH_LONG).show();
-        //openCamera();
+        openCamera();
     }
 
     private void openCamera() {

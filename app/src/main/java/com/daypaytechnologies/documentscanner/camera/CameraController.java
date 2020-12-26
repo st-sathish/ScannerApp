@@ -59,11 +59,11 @@ public class CameraController {
                     }
                 });
 
-        ImageCaptureConfig imageCaptureConfig = new ImageCaptureConfig.Builder().setCaptureMode(ImageCapture.CaptureMode.MIN_LATENCY)
-                .setTargetRotation(activity.getWindowManager().getDefaultDisplay().getRotation()).build();
-        imgCap = new ImageCapture(imageCaptureConfig);
+        //ImageCaptureConfig imageCaptureConfig = new ImageCaptureConfig.Builder().setCaptureMode(ImageCapture.CaptureMode.MIN_LATENCY)
+                //.setTargetRotation(activity.getWindowManager().getDefaultDisplay().getRotation()).build();
+        //imgCap = new ImageCapture(imageCaptureConfig);
         //bind to lifecycle:
-        CameraX.bindToLifecycle((LifecycleOwner) activity, preview, imgCap);
+        //CameraX.bindToLifecycle((LifecycleOwner) activity, preview, imgCap);
     }
 
     public ImageCapture getImageCaptureInstance() {

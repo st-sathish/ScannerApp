@@ -9,12 +9,14 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.camera.core.CameraX;
+import androidx.camera.core.FlashMode;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.ImageCaptureConfig;
 import androidx.camera.core.Preview;
@@ -59,11 +61,13 @@ public class CameraController {
                     }
                 });
 
-        //ImageCaptureConfig imageCaptureConfig = new ImageCaptureConfig.Builder().setCaptureMode(ImageCapture.CaptureMode.MIN_LATENCY)
-                //.setTargetRotation(activity.getWindowManager().getDefaultDisplay().getRotation()).build();
-        //imgCap = new ImageCapture(imageCaptureConfig);
+        ImageCaptureConfig imageCaptureConfig = new ImageCaptureConfig.Builder()
+                .setLensFacing(CameraX.LensFacing.BACK)
+                .setFlashMode(FlashMode.ON)
+                .build();
+        imgCap = new ImageCapture(imageCaptureConfig);
         //bind to lifecycle:
-        //CameraX.bindToLifecycle((LifecycleOwner) activity, preview, imgCap);
+        CameraX.bindToLifecycle((LifecycleOwner) activity, preview, imgCap);
     }
 
     public ImageCapture getImageCaptureInstance() {

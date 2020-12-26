@@ -17,8 +17,8 @@ import com.daypaytechnologies.documentscanner.R;
 
 public abstract class AbstractScannerFragment extends BaseFragment {
 
-    private int REQUEST_CODE_PERMISSIONS = 101;
-    private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE"};
+    private static final int REQUEST_CODE_PERMISSIONS = 101;
+    private static final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE"};
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

@@ -49,7 +49,7 @@ public class IDCardScannerFragment extends AbstractScannerFragment {
     @Override
     public void onPermissionGranted() {
         Toast.makeText(getActivity(), "Permission granted", Toast.LENGTH_LONG).show();
-        openCamera();
+        //openCamera();
     }
 
     private void openCamera() {

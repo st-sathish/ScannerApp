@@ -12,6 +12,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.daypaytechnologies.documentscanner.R;
 
+import java.util.List;
+
 public class TakePictureFragment extends BaseFragment {
 
     public static TakePictureFragment newInstance(String aTitle) {
@@ -42,5 +44,17 @@ public class TakePictureFragment extends BaseFragment {
         if (aAddtoBackstack)
             ft.addToBackStack(backStateName);
         ft.commit();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        List<Fragment> fragments = getChildFragmentManager().getFragments();
+        for (Fragment fragment : fragments) {
+            if (fragment != null && fragment.isVisible()) {
+                fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+                break;
+            }
+        }
     }
 }

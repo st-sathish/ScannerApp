@@ -1,7 +1,10 @@
 package com.daypaytechnologies.documentscanner;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -9,6 +12,8 @@ import com.daypaytechnologies.documentscanner.fragments.CameraFragment;
 import com.daypaytechnologies.documentscanner.fragments.DocumentsListFragment;
 import com.daypaytechnologies.documentscanner.fragments.HomeFragment;
 import com.daypaytechnologies.documentscanner.fragments.TakePictureFragment;
+
+import java.util.List;
 
 public class LandingPageActivity extends BaseAppCompatActivity {
 
@@ -55,5 +60,17 @@ public class LandingPageActivity extends BaseAppCompatActivity {
         if (aAddtoBackstack)
             ft.addToBackStack(backStateName);
         ft.commit();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        for (Fragment fragment : fragments) {
+            if (fragment != null && fragment.isVisible()) {
+                fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+                break;
+            }
+        }
     }
 }

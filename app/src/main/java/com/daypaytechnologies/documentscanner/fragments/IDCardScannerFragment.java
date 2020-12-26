@@ -53,11 +53,11 @@ public class IDCardScannerFragment extends AbstractScannerFragment {
     }
 
     private void openCamera() {
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams)cameraLayout.getLayoutParams();
-        layoutParams.setMargins(20, 0, 20, 0);
-        layoutParams.height = 600;
-        cameraLayout.setLayoutParams(layoutParams);
-        cameraLayout.setBackgroundResource(R.drawable.round_cornor);
+//        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams)cameraLayout.getLayoutParams();
+//        layoutParams.setMargins(20, 0, 20, 0);
+//        layoutParams.height = 600;
+//        cameraLayout.setLayoutParams(layoutParams);
+//        cameraLayout.setBackgroundResource(R.drawable.round_cornor);
         cameraController.startCamera();
     }
 }

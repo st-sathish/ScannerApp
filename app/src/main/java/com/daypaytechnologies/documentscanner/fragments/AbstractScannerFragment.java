@@ -2,8 +2,10 @@ package com.daypaytechnologies.documentscanner.fragments;
 
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.daypaytechnologies.documentscanner.R;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public abstract class AbstractScannerFragment extends BaseFragment {
 
@@ -65,6 +72,23 @@ public abstract class AbstractScannerFragment extends BaseFragment {
 
     public static int getScreenHeight() {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
+    }
+
+    protected File saveImage(byte[] bytes) {
+        FileOutputStream outStream;
+        try {
+            String fileName = "TUTORIALWING_" + System.currentTimeMillis() + ".jpg";
+            File file = new File(Environment.getExternalStorageDirectory(), fileName);
+            outStream = new FileOutputStream(file);
+            outStream.write(bytes);
+            outStream.close();
+            Toast.makeText(getActivity(), "Picture Saved: " + fileName, Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "saved path: " + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
+            return file;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public abstract void onPermissionGranted();

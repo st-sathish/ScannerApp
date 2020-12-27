@@ -28,9 +28,11 @@ import com.daypaytechnologies.documentscanner.R;
 import com.daypaytechnologies.documentscanner.camera.CameraController;
 import com.daypaytechnologies.documentscanner.camera.CameraType;
 
+import java.io.File;
+
 import static android.content.Context.WINDOW_SERVICE;
 
-public class IDCardScannerFragment extends AbstractScannerFragment implements SurfaceHolder.Callback {
+public class IDCardScannerFragment extends AbstractScannerFragment implements SurfaceHolder.Callback, Camera.PictureCallback {
 
     private SurfaceView cameraView, transparentView;
     private SurfaceHolder holder, holderTransparent;
@@ -155,6 +157,16 @@ public class IDCardScannerFragment extends AbstractScannerFragment implements Su
         camera.release(); //for release a camera
     }
 
+    public void captureImage(Camera camera) {
+        if (camera != null) {
+            camera.takePicture(null, null, this);
+        }
+    }
+
+    @Override
+    public void onPictureTaken(byte[] bytes, Camera camera) {
+        File file = saveImage(bytes);
+    }
 
     @Override
     public void onDestroy() {

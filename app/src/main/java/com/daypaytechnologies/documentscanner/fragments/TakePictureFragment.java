@@ -14,7 +14,9 @@ import com.daypaytechnologies.documentscanner.R;
 
 import java.util.List;
 
-public class TakePictureFragment extends BaseFragment {
+public class TakePictureFragment extends BaseFragment implements View.OnClickListener {
+
+    IDCardScannerFragment idCardScanFragment;
 
     public static TakePictureFragment newInstance(String aTitle) {
         TakePictureFragment cameraFragment = new TakePictureFragment();
@@ -28,12 +30,13 @@ public class TakePictureFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fr_take_picture, container, false);
+        view.findViewById(R.id.ic_capture).setOnClickListener(this);
         chooseFragment();
         return view;
     }
 
     public void chooseFragment() {
-        Fragment idCardScanFragment = IDCardScannerFragment.newInstance("");
+        idCardScanFragment = IDCardScannerFragment.newInstance("");
         switchFragment(idCardScanFragment, true);
     }
 
@@ -44,6 +47,17 @@ public class TakePictureFragment extends BaseFragment {
         if (aAddtoBackstack)
             ft.addToBackStack(backStateName);
         ft.commit();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()) {
+            case R.id.ic_capture:
+                idCardScanFragment.captureImage();
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

@@ -25,8 +25,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.daypaytechnologies.documentscanner.R;
-import com.daypaytechnologies.documentscanner.camera.CameraController;
-import com.daypaytechnologies.documentscanner.camera.CameraType;
 
 import java.io.File;
 
@@ -85,7 +83,7 @@ public class IDCardScannerFragment extends AbstractScannerFragment implements Su
         setUpTransparentView();
     }
 
-    private void Draw() {
+    private void drawRectangleBox() {
         Canvas canvas = holderTransparent.lockCanvas(null);
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.STROKE);
@@ -94,7 +92,7 @@ public class IDCardScannerFragment extends AbstractScannerFragment implements Su
         RectLeft = 1;
         RectTop = 200 ;
         RectRight = RectLeft+ deviceWidth-100;
-        RectBottom =RectTop+ 200;
+        RectBottom =RectTop+ 500;
         Rect rec=new Rect((int) RectLeft,(int)RectTop,(int)RectRight,(int)RectBottom);
         canvas.drawRect(rec,paint);
         holderTransparent.unlockCanvasAndPost(canvas);
@@ -104,8 +102,9 @@ public class IDCardScannerFragment extends AbstractScannerFragment implements Su
 
     public void surfaceCreated(SurfaceHolder holder) {
         try {
-            synchronized (holder)
-            {Draw();}   //call a draw method
+            synchronized (holder) {
+                drawRectangleBox(); //call a draw method
+            }
             camera = Camera.open(); //open a camera
         }
         catch (Exception e) {
@@ -113,7 +112,7 @@ public class IDCardScannerFragment extends AbstractScannerFragment implements Su
         }
         Camera.Parameters param;
         param = camera.getParameters();
-        param.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        //param.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
         Display display = ((WindowManager)getActivity().getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
         if(display.getRotation() == Surface.ROTATION_0)
         {
@@ -154,10 +153,13 @@ public class IDCardScannerFragment extends AbstractScannerFragment implements Su
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
+        if(camera == null) {
+            return;
+        }
         camera.release(); //for release a camera
     }
 
-    public void captureImage(Camera camera) {
+    public void captureImage() {
         if (camera != null) {
             camera.takePicture(null, null, this);
         }
@@ -166,6 +168,7 @@ public class IDCardScannerFragment extends AbstractScannerFragment implements Su
     @Override
     public void onPictureTaken(byte[] bytes, Camera camera) {
         File file = saveImage(bytes);
+        refreshCamera();
     }
 
     @Override

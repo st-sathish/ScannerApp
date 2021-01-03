@@ -72,10 +72,15 @@ public abstract class AbstractScannerFragment extends BaseFragment {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
+
     protected File saveImage(byte[] bytes) {
         FileOutputStream outStream;
         try {
-            String fileName = "TUTORIALWING_" + System.currentTimeMillis() + ".jpg";
+            File folder = new File(Environment.getExternalStorageDirectory()+File.separator+"DOCUMENT_SCANNER");
+            if(!folder.exists()) {
+                folder.mkdirs();
+            }
+            String fileName = "DC_" + System.currentTimeMillis() + ".jpg";
             File file = new File(Environment.getExternalStorageDirectory(), fileName);
             outStream = new FileOutputStream(file);
             outStream.write(bytes);

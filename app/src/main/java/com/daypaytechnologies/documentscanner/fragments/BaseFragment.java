@@ -1,11 +1,15 @@
 package com.daypaytechnologies.documentscanner.fragments;
 
+import android.view.View;
+
 import androidx.fragment.app.Fragment;
 
 import com.daypaytechnologies.documentscanner.BaseAppCompatActivity;
 import com.daypaytechnologies.documentscanner.LandingPageActivity;
 
 public class BaseFragment extends Fragment {
+
+    protected View mParentView;
 
     public void switchFragment(int fragment, String title, boolean addToBackStack) {
         LandingPageActivity landingPageActivity = (LandingPageActivity) getActivity();

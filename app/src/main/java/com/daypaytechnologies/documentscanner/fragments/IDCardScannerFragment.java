@@ -25,6 +25,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.daypaytechnologies.documentscanner.R;
+import com.daypaytechnologies.documentscanner.widgets.IDCardPopupWindow;
+import com.labo.kaji.relativepopupwindow.RelativePopupWindow;
 
 import java.io.File;
 
@@ -38,6 +40,10 @@ public class IDCardScannerFragment extends AbstractScannerFragment implements Su
     int  deviceHeight,deviceWidth;
     Camera camera;
 
+    private static final int ID_CARD_WIDTH = 1016;
+    private static final int ID_CARD_HEIGHT = 638;
+    private IDCardPopupWindow popup;
+
     public static IDCardScannerFragment newInstance(String aTitle) {
         IDCardScannerFragment cameraFragment = new IDCardScannerFragment();
         Bundle bundle = new Bundle();
@@ -49,10 +55,10 @@ public class IDCardScannerFragment extends AbstractScannerFragment implements Su
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fr_id_card_scanner, container, false);
-        cameraView = view.findViewById(R.id.camera_view);
-        transparentView = view.findViewById(R.id.transparent_view);
-        return view;
+        mParentView = inflater.inflate(R.layout.fr_id_card_scanner, container, false);
+        cameraView = mParentView.findViewById(R.id.camera_view);
+        transparentView = mParentView.findViewById(R.id.transparent_view);
+        return mParentView;
     }
 
     @Override
@@ -65,6 +71,17 @@ public class IDCardScannerFragment extends AbstractScannerFragment implements Su
         holder.addCallback((SurfaceHolder.Callback) this);
         //holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         cameraView.setSecure(true);
+    }
+
+    private void openPopupWindow() {
+        popup = new IDCardPopupWindow(mParentView.getContext());
+        popup.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popup.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popup.showOnAnchor(mParentView, RelativePopupWindow.VerticalPosition.ALIGN_TOP, RelativePopupWindow.HorizontalPosition.RIGHT, true);
+    }
+
+    private void closePopupWindow() {
+        popup.dismiss();
     }
 
     private void setUpTransparentView() {
@@ -99,7 +116,6 @@ public class IDCardScannerFragment extends AbstractScannerFragment implements Su
     }
 
     @Override
-
     public void surfaceCreated(SurfaceHolder holder) {
         try {
             synchronized (holder) {
@@ -110,18 +126,20 @@ public class IDCardScannerFragment extends AbstractScannerFragment implements Su
         catch (Exception e) {
             return;
         }
-        Camera.Parameters param;
-        param = camera.getParameters();
-        //param.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        Camera.Parameters parameters = camera.getParameters();
+        parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        //parameters.set("jpeg-quality", 70);
+        //parameters.setPictureFormat(PixelFormat.JPEG);
+        //parameters.setPictureSize(ID_CARD_WIDTH, ID_CARD_HEIGHT);
         Display display = ((WindowManager)getActivity().getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
-        if(display.getRotation() == Surface.ROTATION_0)
-        {
+        if(display.getRotation() == Surface.ROTATION_0) {
             camera.setDisplayOrientation(90);
         }
-        camera.setParameters(param);
+        camera.setParameters(parameters);
         try {
             camera.setPreviewDisplay(holder);
             camera.startPreview();
+            openPopupWindow();
         }
         catch (Exception e) {
             return;

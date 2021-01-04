@@ -10,8 +10,8 @@ public class FileVO {
 
     private Bitmap bitmap;
 
-    public FileVO (Bitmap bitmap) {
-        this.bitmap = bitmap;
+    public FileVO () {
+
     }
 
     public File getFile() {

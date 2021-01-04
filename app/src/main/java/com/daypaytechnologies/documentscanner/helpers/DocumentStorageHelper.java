@@ -47,8 +47,7 @@ public class DocumentStorageHelper {
             return fileVOList;
         }
         for(File file: list) {
-            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-            FileVO fileVO = new FileVO(bitmap);
+            FileVO fileVO = new FileVO();
             fileVO.setFile(file);
             fileVOList.add(fileVO);
         }

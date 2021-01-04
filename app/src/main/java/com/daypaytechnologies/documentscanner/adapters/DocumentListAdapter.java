@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.daypaytechnologies.documentscanner.R;
 import com.daypaytechnologies.documentscanner.vo.FileVO;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class DocumentListAdapter extends RecyclerView.Adapter<DocumentListAdapte
     public void onBindViewHolder(@NonNull DocumentListAdapter.DocumentViewHolder holder, int position) {
         FileVO fileVO = data.get(position);
         File file = fileVO.getFile();
-        holder.document.setImageBitmap(fileVO.getBitmap());
+        Picasso.get().load(file).into(holder.document);
     }
 
     @Override

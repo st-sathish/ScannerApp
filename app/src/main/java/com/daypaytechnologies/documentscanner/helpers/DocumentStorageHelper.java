@@ -16,7 +16,7 @@ public class DocumentStorageHelper {
 
     private Activity mActivity;
 
-    private static final String ROOT_DIRECTORY = "DocumentScanner";
+    private static final String ROOT_DIRECTORY = "DOCUMENT_SCANNER";
 
     public DocumentStorageHelper(Activity activity) {
         this.mActivity = activity;
@@ -35,10 +35,10 @@ public class DocumentStorageHelper {
     }
 
     public File getRootDirectoryPath() {
-        return new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.pathSeparator + ROOT_DIRECTORY);
+        return new File(Environment.getExternalStorageDirectory() + File.separator + ROOT_DIRECTORY);
     }
 
-    public List<FileVO> findAllDocuments() {
+    public List<FileVO> findAllScannedDocuments() {
         File directory = getRootDirectoryPath();
         File[] list = directory.listFiles();
 

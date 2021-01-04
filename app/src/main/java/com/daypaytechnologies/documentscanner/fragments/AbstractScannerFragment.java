@@ -78,10 +78,10 @@ public abstract class AbstractScannerFragment extends BaseFragment {
         try {
             File folder = new File(Environment.getExternalStorageDirectory()+File.separator+"DOCUMENT_SCANNER");
             if(!folder.exists()) {
-                folder.mkdirs();
+                boolean isCreated = folder.mkdirs();
             }
             String fileName = "DC_" + System.currentTimeMillis() + ".jpg";
-            File file = new File(Environment.getExternalStorageDirectory(), fileName);
+            File file = new File(folder, fileName);
             outStream = new FileOutputStream(file);
             outStream.write(bytes);
             outStream.close();

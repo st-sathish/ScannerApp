@@ -1,6 +1,8 @@
 package com.daypaytechnologies.documentscanner;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -71,6 +73,18 @@ public class LandingPageActivity extends BaseAppCompatActivity {
                 fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
                 break;
             }
+        }
+    }
+
+    @Override
+    public void onBackPressed(){
+        FragmentManager fm = getFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            Log.i("MainActivity", "popping backstack");
+            fm.popBackStack();
+        } else {
+            Log.i("MainActivity", "nothing on backstack, calling super");
+            super.onBackPressed();
         }
     }
 }

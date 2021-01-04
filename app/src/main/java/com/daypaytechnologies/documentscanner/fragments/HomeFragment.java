@@ -8,16 +8,27 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.daypaytechnologies.documentscanner.R;
-import com.daypaytechnologies.documentscanner.adapters.FileListAdapter;
+import com.daypaytechnologies.documentscanner.adapters.DocumentListAdapter;
+import com.daypaytechnologies.documentscanner.helpers.DocumentStorageHelper;
+import com.daypaytechnologies.documentscanner.vo.FileVO;
 
 import java.io.File;
+import java.util.List;
 
 import static com.daypaytechnologies.documentscanner.LandingPageActivity.CAMERA_FRAGMENT;
 import static com.daypaytechnologies.documentscanner.LandingPageActivity.TAKE_PICTURE_FRAGMENT;
 
 public class HomeFragment extends BaseFragment implements View.OnClickListener {
+
+    private RecyclerView recyclerView;
+
+    private DocumentListAdapter documentListAdapter;
+
+    private DocumentStorageHelper documentStorageHelper;
 
     public static HomeFragment newInstance(String aTitle) {
         HomeFragment cameraFragment = new HomeFragment();
@@ -37,6 +48,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fr_home, container, false);
         view.findViewById(R.id.ic_camera).setOnClickListener(this);
+        recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        documentListAdapter = new DocumentListAdapter();
+        recyclerView.setAdapter(documentListAdapter);
         loadFiles();
         return view;
     }
@@ -49,10 +64,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void loadFiles() {
-        File folder = new File(Environment.getExternalStorageDirectory()+File.separator+"DOCUMENT_SCANNER");
-        File[] files = folder.listFiles();
-        //declare adapter
-        FileListAdapter adapter = new FileListAdapter();
-        adapter.refresh(files);
+        documentStorageHelper = new DocumentStorageHelper(getActivity());
+        List<FileVO> files = documentStorageHelper.findAllScannedDocuments();
+        documentListAdapter.refresh(files);
     }
 }

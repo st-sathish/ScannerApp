@@ -16,7 +16,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DocumentListAdapter extends RecyclerView.Adapter<DocumentListAdapter.ScannedDocumentViewHolder> {
+public class DocumentListAdapter extends RecyclerView.Adapter<DocumentListAdapter.DocumentViewHolder> {
 
     private List<FileVO> data = new ArrayList<>();
 
@@ -31,15 +31,15 @@ public class DocumentListAdapter extends RecyclerView.Adapter<DocumentListAdapte
 
     @NonNull
     @Override
-    public DocumentListAdapter.ScannedDocumentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public DocumentListAdapter.DocumentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View deviceView = inflater.inflate(R.layout.item_document, parent, false);
-        return new DocumentListAdapter.ScannedDocumentViewHolder(deviceView);
+        return new DocumentListAdapter.DocumentViewHolder(deviceView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DocumentListAdapter.ScannedDocumentViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull DocumentListAdapter.DocumentViewHolder holder, int position) {
         FileVO fileVO = data.get(position);
         File file = fileVO.getFile();
         holder.document.setImageBitmap(fileVO.getBitmap());
@@ -50,10 +50,10 @@ public class DocumentListAdapter extends RecyclerView.Adapter<DocumentListAdapte
         return data.size();
     }
 
-    public static class ScannedDocumentViewHolder extends RecyclerView.ViewHolder  {
+    public static class DocumentViewHolder extends RecyclerView.ViewHolder  {
         private ImageView document;
 
-        public ScannedDocumentViewHolder(@NonNull View itemView) {
+        public DocumentViewHolder(@NonNull View itemView) {
             super(itemView);
             document = itemView.findViewById(R.id.item_document);
         }

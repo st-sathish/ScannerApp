@@ -48,7 +48,7 @@ public class DocumentsListFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         documentStorageHelper = new DocumentStorageHelper(getActivity());
-        List<FileVO> files = documentStorageHelper.findAllDocuments();
+        List<FileVO> files = documentStorageHelper.findAllScannedDocuments();
         adapter.refresh(files);
     }
 }

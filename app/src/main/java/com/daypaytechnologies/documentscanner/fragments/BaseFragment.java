@@ -27,4 +27,11 @@ public class BaseFragment extends Fragment {
             landingPageActivity.hideLoading();
         }
     }
+
+    protected void goBack() {
+        LandingPageActivity landingPageActivity = (LandingPageActivity) getActivity();
+        if(landingPageActivity != null) {
+            getActivity().onBackPressed();
+        }
+    }
 }

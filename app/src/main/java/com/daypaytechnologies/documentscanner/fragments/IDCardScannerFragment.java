@@ -168,7 +168,8 @@ public class IDCardScannerFragment extends AbstractScannerFragment implements Su
     @Override
     public void onPictureTaken(byte[] bytes, Camera camera) {
         File file = saveImage(bytes);
-        refreshCamera();
+        //refreshCamera();
+        goBack();
     }
 
     @Override

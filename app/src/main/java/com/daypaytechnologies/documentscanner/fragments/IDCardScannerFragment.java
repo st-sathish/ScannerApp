@@ -80,7 +80,7 @@ public class IDCardScannerFragment extends AbstractScannerFragment implements Su
     }
 
     private void openPopupWindow() {
-        IDCardPopupWindow popupWindow = new IDCardPopupWindow(getActivity(), mParentView, this);
+        popup = new IDCardPopupWindow(getActivity(), mParentView, this);
     }
 
     private void setUpTransparentView() {
@@ -94,6 +94,7 @@ public class IDCardScannerFragment extends AbstractScannerFragment implements Su
 
     @Override
     public void onIDCardPositionTextClicked(String tag) {
+        popup.dismiss();
         openCamera();
     }
 

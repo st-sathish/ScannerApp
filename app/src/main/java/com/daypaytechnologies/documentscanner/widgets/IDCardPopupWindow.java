@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -18,14 +19,19 @@ import com.daypaytechnologies.documentscanner.R;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
-public class IDCardPopupWindow implements View.OnClickListener {
+public class IDCardPopupWindow implements View.OnClickListener, PopupWindow.OnDismissListener {
 
     private OnPopupWindowTextClickListener mListener;
 
     private PopupWindow popupWindow;
 
+    private Context mContext;
+
+    private String selectedPosition;
+
     public IDCardPopupWindow(Context context, View view, OnPopupWindowTextClickListener listener) {
         this.mListener = listener;
+        this.mContext = context;
         // inflate the layout of the popup window
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.popup_window, null);
@@ -41,19 +47,24 @@ public class IDCardPopupWindow implements View.OnClickListener {
         popupView.findViewById(R.id.front_side).setOnClickListener(this);
         popupView.findViewById(R.id.back_side).setOnClickListener(this);
         // dismiss the popup window when touched
-        popupView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
-
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setFocusable(true);
+        popupWindow.setOnDismissListener(this);
     }
 
     @Override
     public void onClick(View view) {
+        selectedPosition = (String)view.getTag();
+        mListener.onIDCardPositionTextClicked(selectedPosition);
+    }
+
+    @Override
+    public void onDismiss() {
+        Toast.makeText(mContext, "Dismissed", Toast.LENGTH_LONG).show();
+    }
+
+    public void dismiss() {
         popupWindow.dismiss();
-        mListener.onIDCardPositionTextClicked((String)view.getTag());
     }
 
     public interface OnPopupWindowTextClickListener {
